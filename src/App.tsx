@@ -53,7 +53,7 @@ function App() {
       const subscribersResponse = await fetch(`https://my-app-backend-br8l.onrender.com/subscriptions?instanceId=${instanceId}`).then(res => res.json());
 
       if (subscribersResponse?.subscriptions?.length) {
-        setSubscribers(subscribersResponse);
+        setSubscribers(subscribersResponse.subscriptions);
       };
     };
 
