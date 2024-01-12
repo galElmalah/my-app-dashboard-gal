@@ -1,10 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import './index.css'
+import { WixDesignSystemProvider } from '@wix/design-system';
+import "@wix/design-system/styles.global.css";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <WixDesignSystemProvider>
+      <App />
+    </WixDesignSystemProvider>
   </React.StrictMode>,
 )
