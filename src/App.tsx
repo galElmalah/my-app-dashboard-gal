@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Page, Button, Table, TableColumn } from '@wix/design-system';
+import {
+  Page,
+  Button,
+  Table,
+  Box,
+  Loader,
+  type TableColumn
+} from '@wix/design-system';
 
 type Subscriber = {
   email: string;
@@ -24,6 +31,7 @@ const getInstanceId = () => {
 function App() {
   const instanceId = getInstanceId();
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const columns: TableColumn<Subscriber>[] = [
     {
@@ -55,6 +63,8 @@ function App() {
       if (subscribersResponse?.subscriptions?.length) {
         setSubscribers(subscribersResponse.subscriptions);
       };
+
+      setLoading(false);
     };
 
     getSubscribers();
@@ -73,10 +83,18 @@ function App() {
           data={subscribers}
           columns={columns}
         >
-          <Table.Content />
-          <Table.EmptyState
-            title="No Subscribers"
-          />
+          {loading ? (
+            <Box align='center'>
+              <Loader />
+            </Box>
+          ) : (
+            <Table.Content />
+          )}
+          {!loading && !subscribers.length && (
+            <Table.EmptyState
+              title="No Subscribers"
+            />
+          )}
         </Table>
       </Page.Content>
     </Page>
