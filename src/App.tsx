@@ -9,10 +9,20 @@ type Subscriber = {
   updatedDate: string;
 };
 
-function App() {
+const getInstanceId = () => {
   const instance = new URLSearchParams(window.location.search).get('instance');
-  const { instanceId } = JSON.parse(atob(instance?.split('.')[1] || '') || '{}');
 
+  if (instance) {
+    const instancePayload = instance?.split('.')[1] as string;
+    const parsedInstance = JSON.parse(atob(instancePayload));
+    const instanceId = parsedInstance.instanceId as string;
+
+    return instanceId;
+  };
+};
+
+function App() {
+  const instanceId = getInstanceId();
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
 
   const columns: TableColumn<Subscriber>[] = [
@@ -34,7 +44,7 @@ function App() {
     {
       title: 'Subscribe Date',
       width: '20%',
-      render: (row) => row.createdDate,
+      render: (row) => new Date(row.createdDate).toLocaleDateString(),
     },
   ];
 
@@ -42,7 +52,9 @@ function App() {
     const getSubscribers = async () => {
       const subscribersResponse = await fetch(`https://my-app-backend-br8l.onrender.com/subscriptions?instanceId=${instanceId}`).then(res => res.json());
 
-      console.log("SUB RES", subscribersResponse);
+      if (subscribersResponse?.subscriptions?.length) {
+        setSubscribers(subscribersResponse);
+      };
     };
 
     getSubscribers();
@@ -62,6 +74,9 @@ function App() {
           columns={columns}
         >
           <Table.Content />
+          <Table.EmptyState
+            title="No Subscribers"
+          />
         </Table>
       </Page.Content>
     </Page>

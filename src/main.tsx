@@ -6,7 +6,7 @@ import "@wix/design-system/styles.global.css";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <WixDesignSystemProvider>
+    <WixDesignSystemProvider features={{ newColorsBranding: true }}>
       <App />
     </WixDesignSystemProvider>
   </React.StrictMode>,
