@@ -96,13 +96,16 @@ class SubscribeForm extends HTMLElement {
         `https://galisrael8914.wixstudio.io/v1api/_functions/subscribers`,
         {
           method: 'POST',
+          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             instanceId: wixConfig.instanceId,
             email,
           }),
         },
-      );
+      )
+        .then((response) => console.log(response))
+        .catch((error) => console.error(error));
 
       this.shadowRoot.innerHTML = `
         ${styles}
