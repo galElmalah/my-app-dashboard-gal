@@ -58,7 +58,7 @@ function App() {
 
   useEffect(() => {
     const getSubscribers = async () => {
-      const subscribersResponse = await fetch(`https://my-app-backend-br8l.onrender.com/subscriptions?instanceId=${instanceId}`).then(res => res.json());
+      const subscribersResponse = await fetch(`https://galisrael8914.wixstudio.io/v1api/_functions/subscribers?instanceId=${instanceId}`).then(res => res.json());
 
       if (subscribersResponse?.subscriptions?.length) {
         setSubscribers(subscribersResponse.subscriptions);
