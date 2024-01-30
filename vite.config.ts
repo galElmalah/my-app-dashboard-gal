@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [react()],
   define: {
     global: 'window'
-  }
+  },
+  base: "/my-app-dashboard-gal/dist"
 })
